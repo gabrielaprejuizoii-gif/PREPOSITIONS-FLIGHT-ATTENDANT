@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Position &amp; Movement | English for Flight Attendants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6f9;--card:#fff;--ink:#14243a;--mute:#566a82;--line:#d5dfe9;--a:#0b6f86;--a2:#e8a33d;--ok:#1d7a4d;--bad:#b3392f;--soft:#e2f0f4;--onA:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1824;--card:#16263a;--ink:#e8eef5;--mute:#9db0c4;--line:#2a3d55;--a:#5cc3d9;--a2:#f0b95a;--ok:#5fd194;--bad:#ff8a7e;--soft:#18364a;--onA:#0e1824;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1824;--card:#16263a;--ink:#e8eef5;--mute:#9db0c4;--line:#2a3d55;--a:#5cc3d9;--a2:#f0b95a;--ok:#5fd194;--bad:#ff8a7e;--soft:#18364a;--onA:#0e1824;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Figtree,system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 60px}
+h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,system-ui,sans-serif;line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.6rem;font-weight:800}h3{font-size:1.15rem;font-weight:600}
+p{margin:.4em 0 .8em;max-width:70ch}
+.sub{color:var(--mute)}
+.goal{border-left:4px solid var(--a2);padding:4px 0 4px 14px;margin:14px 0 22px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px}
+nav button{flex:1 1 130px;text-align:left;padding:10px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;cursor:pointer;font:inherit}
+nav button b{display:block;font-family:"Bricolage Grotesque",Figtree,sans-serif}
+nav button small{color:var(--mute)}
+nav button[aria-current="true"]{background:var(--a);border-color:var(--a);color:var(--onA)}
+nav button[aria-current="true"] small{color:var(--onA)}
+button,textarea{font:inherit}
+:focus-visible{outline:3px solid var(--a2);outline-offset:2px}
+section[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
+.btn{background:var(--a);color:var(--onA);border:0;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600}
+.btn.ghost{background:transparent;color:var(--a);border:1px solid var(--a)}
+.plane{width:100%;height:auto;display:block}
+.hull{fill:var(--soft);stroke:var(--a);stroke-width:3}
+.sp rect{fill:var(--card);stroke:var(--a);stroke-width:2;cursor:pointer}
+.sp.exit rect{fill:var(--a2);stroke:var(--a2)}
+.sp:hover rect,.sp:focus rect,.sp.on rect{fill:var(--a)}
+.sp text{font:600 13px Figtree,sans-serif;fill:var(--ink);text-anchor:middle;pointer-events:none}
+.sp:hover text,.sp:focus text,.sp.on text{fill:var(--onA)}
+.sp.exit text{fill:#14243a}
+.sp:focus{outline:none}
+.say{min-height:3.2em;font-size:1.2rem;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.say b,.q b,.model b{color:var(--a);background:var(--soft);padding:0 4px;border-radius:4px}
+.front{display:flex;justify-content:space-between;color:var(--mute);font-size:.85rem}
+.q p{margin-bottom:.5em}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opts button{padding:7px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;cursor:pointer}
+.opts button:hover:not(:disabled){border-color:var(--a)}
+.opts button.ok{background:var(--ok);color:var(--onA);border-color:var(--ok)}
+.opts button.bad{background:var(--bad);color:var(--onA);border-color:var(--bad)}
+.why{margin-top:8px;color:var(--mute);font-size:.95rem}
+.score{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;color:var(--a)}
+.chips span{display:inline-block;background:var(--soft);border-radius:999px;padding:2px 10px;margin:2px 4px 2px 0;font-size:.9rem}
+textarea{width:100%;min-height:80px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);color:var(--ink);margin:8px 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.model{display:none;background:var(--soft);padding:10px 12px;border-radius:10px;margin-top:8px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+ul{padding-left:1.2em;margin:.3em 0}
+li{margin:.2em 0}
+label.chk{display:flex;gap:10px;align-items:flex-start;margin:6px 0;cursor:pointer}
+.act{border:2px dashed var(--a2);border-radius:14px;padding:12px 16px;margin:14px 0}
+.tt{position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:max(12px,env(safe-area-inset-bottom,0px))}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>Position &amp; Movement</h1>
+<p class="sub">Navigating the aircraft and assisting passengers. English for cabin crew, level B1–B2, 45–50 minutes.</p>
+<p class="goal">By the end, you can say where people and objects are, explain how people move through the cabin, and give clear, polite directions to passengers.</p>
+</header>
+<nav id="nav"></nav>
+
+<section id="s0">
+<h2>Warm-up: Walk through the cabin</h2>
+<p>Tap each part of the plan. Listen, then say the sentence out loud. Look at the small words in <b style="color:var(--a)">blue</b>. What are they telling you?</p>
+<div class="card">
+<div class="front"><span>Front of the aircraft</span><span>Back of the aircraft</span></div>
+<svg class="plane" viewBox="0 0 720 240" role="group" aria-label="Aircraft cabin plan. The front is on the left.">
+<path class="hull" d="M10 120Q10 30 90 30H690Q710 30 710 120Q710 210 690 210H90Q10 210 10 120Z"/>
+<g class="sp" tabindex="0" role="button" data-s="The galley is <b>in front of</b> the main cabin."><rect x="70" y="56" width="90" height="50" rx="8"/><text x="115" y="86">Galley</text></g>
+<g class="sp" tabindex="0" role="button" data-s="The lavatory is <b>across from</b> the galley."><rect x="70" y="134" width="90" height="50" rx="8"/><text x="115" y="164">Lavatory</text></g>
+<g class="sp exit" tabindex="0" role="button" data-s="Your seat is <b>next to</b> the emergency exit."><rect x="196" y="56" width="44" height="50" rx="8"/><text x="218" y="86">Exit</text></g>
+<g class="sp" tabindex="0" role="button" data-s="The safety card is <b>in</b> the seat pocket <b>in front of</b> you."><rect x="250" y="56" width="300" height="50" rx="8"/><text x="400" y="86">Seats and seat pockets</text></g>
+<g class="sp" tabindex="0" role="button" data-s="Your life vest is <b>under</b> your seat."><rect x="250" y="134" width="300" height="50" rx="8"/><text x="400" y="164">Seats</text></g>
+<g class="sp" tabindex="0" role="button" data-s="The overhead compartments are <b>above</b> the passenger seats."><rect x="250" y="34" width="300" height="16" rx="6"/><text x="400" y="46" style="font-size:11px">Overhead bins</text></g>
+<g class="sp" tabindex="0" role="button" data-s="Please keep the aisle clear so the crew can move <b>through</b> the cabin."><rect x="70" y="110" width="520" height="20" rx="6"/><text x="330" y="125">Aisle</text></g>
+<g class="sp" tabindex="0" role="button" data-s="The rear galley is <b>behind</b> the main cabin."><rect x="600" y="56" width="90" height="128" rx="8"/><text x="645" y="124">Rear galley</text></g>
+</svg>
+<div class="say" id="say" aria-live="polite">Tap a part of the cabin to begin.</div>
+</div>
+<div class="act"><h3>Stand-up challenge</h3><p>Put a pen, a bag and a chair in front of you. Move the pen <i>on</i> the chair, <i>under</i> the chair, <i>next to</i> the bag, <i>between</i> the bag and the chair. Say each sentence as you move it. Ready for the next stage? Then answer out loud: <i>Where are you sitting right now? Use two prepositions.</i></p></div>
+<p><button class="btn" onclick="go(1)">Next: Notice the pattern</button></p>
+</section>
+
+<section id="s1" hidden>
+<h2>Notice: Spot the difference</h2>
+<p>Read each pair. Make a guess first. Then the rule appears, so you can check your idea.</p>
+<div id="notice"></div>
+<p><button class="btn" onclick="go(2)">Next: Practice</button></p>
+</section>
+
+<section id="s2" hidden>
+<h2>Practice: Choose the best word</h2>
+<p>Real sentences from real flights. Tap the correct preposition. Use <b>Listen</b> if you want to hear the full sentence.</p>
+<p class="score" id="pscore">Score: 0 / 10</p>
+<div id="practice"></div>
+<p><button class="btn" onclick="go(3)">Next: Produce</button></p>
+</section>
+
+<section id="s3" hidden>
+<h2>Produce: You are the flight attendant</h2>
+<p>Choose a situation. Write 2 or 3 polite sentences, check your prepositions, then <b>say your answer aloud</b>. Compare it with the model last.</p>
+<div id="scen"></div>
+<p><button class="btn" onclick="go(4)">Next: Wrap-up</button></p>
+</section>
+
+<section id="s4" hidden>
+<h2>Wrap-up</h2>
+<div class="cols">
+<div class="card"><h3>Place: where is it?</h3><ul>
+<li><b>in / inside</b>: in the seat pocket</li><li><b>on</b>: on the tray table</li><li><b>at</b>: at the door, at row 12</li>
+<li><b>under / below</b>: under the seat</li><li><b>above</b>: above the seats</li>
+<li><b>behind / in front of</b>: behind the galley</li><li><b>next to / beside / near / by</b>: beside the window</li>
+<li><b>between</b>: between two seats</li><li><b>across from</b>: across from the galley</li></ul></div>
+<div class="card"><h3>Movement: where is it going?</h3><ul>
+<li><b>to / toward</b>: to the exit / toward the front</li><li><b>into / out of</b>: into the row / out of the row</li>
+<li><b>through</b>: through the cabin</li><li><b>across / along</b>: across the aisle / along the aisle</li>
+<li><b>past / around</b>: past the galley / around the trolley</li><li><b>up / down</b>: up the steps / down the aisle</li>
+<li><b>from</b>: from the door to seat 22F</li></ul></div>
+</div>
+<div class="card"><h3>Polite crew phrases</h3><ul>
+<li>"May I show you to your seat? It is <b>by</b> the window, <b>on</b> your left."</li>
+<li>"Let me help you put that <b>in</b> the overhead bin <b>above</b> row 14."</li>
+<li>"Please wait <b>behind</b> the yellow line."</li>
+<li>"Could you step <b>out of</b> the row for a moment?"</li>
+<li>"The first aid kit is <b>in</b> the galley, <b>next to</b> the oven."</li></ul></div>
+<div class="card"><h3>Exit ticket: I can…</h3>
+<label class="chk"><input type="checkbox" class="ex"> say where something is, using at least 5 different prepositions of place.</label>
+<label class="chk"><input type="checkbox" class="ex"> explain the difference between in / into and to / toward.</label>
+<label class="chk"><input type="checkbox" class="ex"> give a passenger polite directions to a seat or the lavatory.</label>
+<label class="chk"><input type="checkbox" class="ex"> tell another crew member where safety equipment is.</label>
+<p class="score" id="exs">0 / 4 done</p></div>
+<div class="act"><h3>Homework (challenge level)</h3><p>Record a 60-second voice message. You are at the boarding door. Guide a passenger to seat 22F, with at least 8 prepositions and 2 safety tips. Then write the same message in 5 sentences and send both to your teacher.</p></div>
+</section>
+<button class="btn ghost tt" id="theme" aria-label="Switch light or dark mode">Light / Dark</button>
+</div>
+<script>
+var $=function(s){return document.querySelector(s)};
+function say(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t.replace(/<[^>]+>/g,""));u.lang="en-US";u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+var stages=[["Warm-up","5 min"],["Notice","10 min"],["Practice","12 min"],["Produce","18 min"],["Wrap-up","5 min"]];
+var nav=$("#nav");
+stages.forEach(function(s,i){var b=document.createElement("button");b.innerHTML="<b>"+s[0]+"</b><small>"+s[1]+"</small>";b.onclick=function(){go(i)};nav.appendChild(b)});
+function go(n){stages.forEach(function(_,i){$("#s"+i).hidden=i!==n;nav.children[i].setAttribute("aria-current",i===n)});window.scrollTo(0,0)}
+go(0);
+document.querySelectorAll(".sp").forEach(function(g){
+ function pick(){document.querySelectorAll(".sp").forEach(function(x){x.classList.remove("on")});g.classList.add("on");
+  var s=g.dataset.s;$("#say").innerHTML="<span>"+s+"</span><button class='btn' onclick='say(this.dataset.t)' data-t=\""+s.replace(/<[^>]+>/g,"")+"\">Listen</button>";say(s)}
+ g.onclick=pick;g.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}}});
+function quiz(el,items,cb){var done=0,score=0;
+ items.forEach(function(it,n){var d=document.createElement("div");d.className="card q";
+  d.innerHTML="<p>"+it.t+"</p>"+(it.say?"<p><button class='btn ghost' type='button'>Listen</button></p>":"");
+  if(it.say)d.querySelector("button").onclick=function(){say(it.say)};
+  var o=document.createElement("div");o.className="opts";var w=document.createElement("div");w.className="why";
+  it.o.forEach(function(x,i){var b=document.createElement("button");b.textContent=x;b.onclick=function(){
+   o.querySelectorAll("button").forEach(function(k,j){k.disabled=true;if(j===it.a)k.classList.add("ok")});
+   var right=i===it.a;if(!right)b.classList.add("bad");else score++;
+   w.innerHTML=(right?"Yes! ":"Not quite. ")+it.w;done++;if(cb)cb(score,done,items.length)};o.appendChild(b)});
+  d.appendChild(o);d.appendChild(w);el.appendChild(d)})}
+quiz($("#notice"),[
+ {t:"<i>A.</i> The bag is <b>in</b> the bin.<br><i>B.</i> Please put the bag <b>into</b> the bin.<br>Which sentence describes movement?",o:["A","B"],a:1,w:"<b>in</b> = position (where it is). <b>into</b> = movement from outside to inside."},
+ {t:"<i>A.</i> The tablet is <b>on</b> the seat.<br><i>B.</i> She lifted the tablet <b>onto</b> the seat.<br>Which sentence describes movement?",o:["A","B"],a:1,w:"<b>on</b> = position on a surface. <b>onto</b> = movement to a surface."},
+ {t:"<i>A.</i> Please go <b>to</b> the lavatory.<br><i>B.</i> Please walk <b>toward</b> the front.<br>Which one means “in that direction” (maybe not arriving yet)?",o:["A","B"],a:1,w:"<b>to</b> = the destination. <b>toward</b> = the direction."},
+ {t:"<i>A.</i> The passenger walked <b>across</b> the aisle.<br><i>B.</i> The crew moved <b>through</b> the cabin.<br>Which one describes moving inside a space with things around you?",o:["A","B"],a:1,w:"<b>across</b> = from one side of a line or surface to the other. <b>through</b> = inside a space, from one end to the other."},
+ {t:"<i>A.</i> The lights are <b>above</b> the seats.<br><i>B.</i> The attendant reached <b>over</b> the seat.<br>Which one includes movement across the top of something?",o:["A","B"],a:1,w:"<b>above</b> = higher, no contact. <b>over</b> = directly higher, covering, or crossing the top."},
+ {t:"<i>A.</i> Small bags go <b>under</b> the seat in front of you.<br><i>B.</i> The floor lights are <b>below</b> the seat level.<br>Which one means directly beneath, close to the thing?",o:["A","B"],a:0,w:"<b>under</b> = directly beneath, often close or touching. <b>below</b> = at a lower level, with space between."}
+],function(s,d,t){});
+var P=[["Your seat is ___ the emergency exit.",["next to","into","through","toward"],0],
+["The safety card is ___ the seat pocket.",["on","in","at","across"],1],
+["The lavatory is ___ from the galley.",["across","through","along","over"],0],
+["Please put small bags ___ the seat in front of you.",["above","over","under","onto"],2],
+["Please walk ___ the front of the aircraft.",["toward","into","by","at"],0],
+["Walk ___ the galley and turn left.",["past","between","in","to"],0],
+["The passenger stepped ___ of the row.",["into","out","through","above"],1],
+["Please put your jacket ___ the overhead compartment.",["on","above","into","between"],2],
+["Please keep the aisle clear so the crew can move ___ the cabin.",["at","through","under","beside"],1],
+["The rear galley is ___ the main cabin.",["behind","across","onto","toward"],0]];
+quiz($("#practice"),P.map(function(p){var full=p[0].replace("___",p[1][p[2]]);return{t:p[0].replace("___","<b>_____</b>"),o:p[1],a:p[2],say:full,w:"“"+full+"”"}}),function(s,d,t){$("#pscore").textContent="Score: "+s+" / "+t+(d===t?(s>=9?" Excellent!":s>=7?" Good work! Review the ones you missed.":" Go back to the Notice stage and try again."):"")});
+var S=[
+["Seat directions","Ms. Holmes is in seat 12A and she is lost. Show her to her seat. It is by the window, behind the exit row.","next to, behind, by, past, on your left","Good evening, Ms. Holmes. Please walk past the galley and toward the back. Your seat, 12A, is by the window, behind the exit row."],
+["Carry-on luggage","Mr. Hargreeves has a large bag. It does not fit in the bin. Help him politely.","above, under, in, into, in front of","Sir, that bag is too big for the overhead bin. May I put it under the seat in front of you, or next to the crew seat?"],
+["Safety equipment","A nervous passenger, Mia, asks where her life vest is.","under, in, between, next to, in front of","Your life vest is in a pouch under your seat. The safety card in the seat pocket in front of you shows how to use it."],
+["Lavatory","Riley needs the lavatory but the sign is on. Tell her where to wait.","behind, across from, near, along, at the end of","The lavatory is across from the galley. Please wait behind the curtain, near the galley, until the sign is green."],
+["Reduced mobility","Help a passenger with a walking aid get to seat 20C.","along, through, into, out of, beside","Let me walk beside you along the aisle. I will stay in front of you through the narrow part, then help you into the row."],
+["Crew communication","Tell a colleague where the first aid kit is during an emergency.","in, above, next to, between, behind","The first aid kit is in the overhead bin above row 12, next to the crew seat. I am moving through the cabin now."]];
+var PR="in front of|next to|across from|out of|inside|into|onto|under|above|below|behind|beside|between|near|through|across|along|towards?|past|around|over|from|up|down|by|at|on|in|to".split("|");
+var sc=$("#scen");
+S.forEach(function(s){var d=document.createElement("div");d.className="card";
+ var chips=s[2].split(", ").map(function(c){return"<span>"+c+"</span>"}).join("");
+ d.innerHTML="<h3>"+s[0]+"</h3><p>"+s[1]+"</p><div class='chips'>"+chips+"</div><textarea placeholder='Write your answer here...'></textarea><div class='row'><button class='btn'>Check prepositions</button><button class='btn ghost'>Show model</button></div><p class='why'></p><div class='model'></div>";
+ var b=d.querySelectorAll("button"),ta=d.querySelector("textarea"),msg=d.querySelector(".why"),m=d.querySelector(".model");
+ b[0].onclick=function(){var t=" "+ta.value.toLowerCase().replace(/[^a-z ]/g," ")+" ";
+  if(t.trim().length<25){msg.textContent="Write 2 or 3 sentences first.";return}
+  var f=[];PR.forEach(function(p){if(new RegExp("\\s"+p+"\\s").test(t)){f.push(p);t=t.replace(new RegExp("\\s"+p+"\\s","g")," ")}});
+  msg.textContent="Prepositions found ("+f.length+"): "+f.join(", ")+". "+(f.length>=3?"Great! Now say it aloud.":"Try to use at least 3 different ones.")};
+ b[1].onclick=function(){m.style.display="block";m.innerHTML="<b>Model:</b> "+s[3]+" <button class='btn' type='button'>Listen</button>";m.querySelector("button").onclick=function(){say(s[3])}};
+ sc.appendChild(d)});
+document.querySelectorAll(".ex").forEach(function(c){c.onchange=function(){$("#exs").textContent=document.querySelectorAll(".ex:checked").length+" / 4 done"}});
+$("#theme").onclick=function(){var r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark"};
+</script>
+</body>
+</html>
